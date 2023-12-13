@@ -1,9 +1,14 @@
 
 # BabyNet
 
+Group members: Ibrahima Sory Sow, Syed Abdul Hannan, Smaksh Judson
+
 Preliminary final video: https://www.youtube.com/watch?v=pyiqYUy5eaE 
 
 Final report Link: https://drive.google.com/file/d/1GPz8BDxt3FrRSgodKm9alad00Uupmgmz/view?usp=sharing 
+
+
+We used some of the infrastucture from iPlanner below. 
 
 ################################ 
 
