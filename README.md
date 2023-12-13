@@ -1,4 +1,10 @@
-# Imperative Path Planner (iPlanner)
+
+# BabyNet
+
+Preliminary final video: https://www.youtube.com/watch?v=pyiqYUy5eaE 
+
+Final report Link: https://drive.google.com/file/d/1GPz8BDxt3FrRSgodKm9alad00Uupmgmz/view?usp=sharing 
+
 
 ## Overview
 
