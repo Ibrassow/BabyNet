@@ -16,7 +16,7 @@ import rospkg
 import tf
 import numpy as np
 from sensor_msgs.msg import Image, Joy
-from std_msgs.msg import Int16
+from std_msgs.msg import Int16, Float32
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, PointStamped
 import ros_numpy
@@ -59,15 +59,20 @@ class iPlannerNode:
         # fear reaction
         self.fear_buffter = 0
         self.is_fear_reaction = False
+
+        # process time
+        self.timer_data = Float32()
         
         rospy.Subscriber(self.depth_topic, Image, self.imageCallback)
         rospy.Subscriber(self.goal_topic, PointStamped, self.goalCallback)
         rospy.Subscriber("/joy", Joy, self.joyCallback, queue_size=10)
 
+        timer_topic = '/ip_timer'
         status_topic = '/iplanner_status'
 
         # planning status topics
         self.status_pub = rospy.Publisher(status_topic, Int16, queue_size=10)
+        self.timer_pub = rospy.Publisher(timer_topic, Float32, queue_size=10)
         # image visualizer
         self.img_pub = rospy.Publisher(self.image_topic, Image, queue_size=10)
         self.path_pub  = rospy.Publisher(self.path_topic, Path, queue_size=10)
@@ -105,9 +110,11 @@ class iPlannerNode:
                 cur_image = self.img.copy()
                 start = time.time()
                 # Network Planning
-                self.preds, self.waypoints, fear_output, _ = self.iplanner_algo.plan(cur_image, self.goal_rb)
+                self.preds, self.waypoints, fear_output, img_process = self.iplanner_algo.plan(cur_image, self.goal_rb)
                 end = time.time()
                 self.timer_data.data = (end - start) * 1000 # check goal less than converage range
+                self.timer_pub.publish(self.timer_data)
+                #rospy.loginfo("Latency:", self.timer_data.data)
                 goal_np = self.goal_rb[0, :].cpu().detach().numpy()
                 if (np.sqrt(goal_np[0]**2 + goal_np[1]**2) < self.conv_dist) and self.is_goal_processed and (not self.is_smartjoy):
                     self.ready_for_planning = False
