@@ -10,7 +10,7 @@
         "model-save": "models/plannernet.pt",
         "resume": true,
         "in-channel": 16,
-        "knodes": 15,
+        "knodes": 5,
         "goal-step": 5,
         "max-episode-length": 25
     },

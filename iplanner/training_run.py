@@ -68,7 +68,8 @@ class PlannerNetTrainer:
             self.config = json.load(json_file)
 
     def prepare_model(self):
-        self.net = PlannerNet(self.args.in_channel, self.args.knodes)
+        #self.net = PlannerNet(self.args.in_channel, self.args.knodes)
+        self.net = BabyNet(self.args.in_channel, self.args.knodes)
         if self.args.resume == True or not self.args.training:
             self.net, self.best_loss = torch.load(self.args.model_save, map_location=torch.device("cpu"))
             print("Resume training from best loss: {}".format(self.best_loss))
